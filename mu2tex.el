@@ -1,8 +1,8 @@
 ;;;; mu2tex.el --- Convert plain text molecule names and units to TeX
-;; Copyright (c) 2005 Carsten Dominik
+;; Copyright (c) 2005, 2019 Carsten Dominik
 
-;; Author: Carsten Dominik <dominik@science.uva.nl>
-;; Version: 1.1
+;; Author: Carsten Dominik <dominik@.uva.nl>
+;; Version: 1.2
 ;; Keywords: tex
 
 ;; This file is not part of GNU Emacs.
