@@ -389,7 +389,7 @@ point is inside one of the standard math environments."
 			  (if (> l 1) (setq s (concat "{" s "}")))
 			  (cond
 			   ((equal molec "") (concat "$^" s "$"))
-			   ((and (or lldot
+			   ((and (or lwdot
 				     (>= n mu2tex-isotope-limit))
 				 (not nidot))
 			    (concat "$^" s "$"))
