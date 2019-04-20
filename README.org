@@ -1,5 +1,7 @@
 # mu2tex
-#+TITLE: Convert ASCII representation of units, numbers and molecule names to LaTeX
+#+TITLE: mu2tex
+
+* Convert ASCII representation of units, numbers and molecule names to LaTeX
 
 
 In scientific literature, it is common to format the symbols for
