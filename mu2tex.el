@@ -131,7 +131,7 @@
 ;;
 ;; AUTHOR
 ;; ------
-;; Carsten Dominik <dominik@science.uva.nl>
+;; Carsten Dominik <dominik@.uva.nl>
 ;;
 ;; ACKNOWLEDGEMENTS
 ;; ----------------
@@ -196,11 +196,11 @@ also this molecule is formatted correctly, use
     "dyn"  ;; Cannot use "N" because that is of course Nitrogen.
     "J" "erg" "cal" "eV" "mK"
     "mol" 
-    "Pa" "hPa" "atm"
+    "Pa" "hPa" "atm" "bar"
     "Bq" "Ci" "rem" "Jy"
     "rad" "sr" "arcmin" "arcsec" "deg" "degree")
   "Words that uniquely identify a unit expression.  Case is significant.
-This default value is good for astgronomy papers.")
+This default value is good for astronomy papers.")
 
 (defcustom mu2tex-units
   '("Jy" "lj" "AU"
