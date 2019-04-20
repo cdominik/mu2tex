@@ -64,23 +64,23 @@ get the math-mode version of the conversion.
 -------------
 You can use the following variables to customize this mode:
 
-mu2tex-use-mathrm
-   Do you prefer $\mathrm{H_2O}$ or H$_2$O in math mode?
-
-mu2tex-use-texmathp
-   Should texmathp.el be used to determine math or text mode?
-
-mu2tex-isotope-limit
-   Numbers larger than or equal to this are interpreted as isotope numbers.
-
-mu2tex-molecule-exceptions
-   Special molecules for which the automatic converter fails.
-
-mu2tex-units
-   Units that can be used to distinguish a unit expression from a molecule.
-
-mu2tex-space-string
-   What should be inserted as separator between different units?
+: mu2tex-use-mathrm
+:    Do you prefer $\mathrm{H_2O}$ or H$_2$O in math mode?
+: 
+: mu2tex-use-texmathp
+:    Should texmathp.el be used to determine math or text mode?
+: 
+: mu2tex-isotope-limit
+:    Numbers larger than or equal to this are interpreted as isotope numbers.
+: 
+: mu2tex-molecule-exceptions
+:    Special molecules for which the automatic converter fails.
+: 
+: mu2tex-units
+:    Units that can be used to distinguish a unit expression from a molecule.
+: 
+: mu2tex-space-string
+:    What should be inserted as separator between different units?
 
 ** Heuristics, and fixes where needed
 ----------------------------------
@@ -100,10 +100,9 @@ mu2tex-space-string
   can simply hard-code the conversion for these molecules using the
   variable `mu2tex-molecule-exceptions'.  For example:
 
-       (setq mu2tex-exceptions
-             '((\"HC18H\" . \"HC$_{18}$H\")
-               (\"H6Li\"  . \"H$^{6}$Li\")))
-
+  :      (setq mu2tex-exceptions
+  :            '((\"HC18H\" . \"HC$_{18}$H\")
+  :              (\"H6Li\"  . \"H$^{6}$Li\")))
 
 * AUTHOR
 ------
