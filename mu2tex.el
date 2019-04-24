@@ -2,7 +2,7 @@
 ;; Copyright (c) 2005, 2019 Carsten Dominik
 
 ;; Author: Carsten Dominik <dominik@.uva.nl>
-;; Version: 1.2
+;; Version: 1.3
 ;; Keywords: tex
 
 ;; This file is not part of GNU Emacs.
