@@ -457,5 +457,7 @@ Useful values are for example \" \", \"~\", \"\\ \", or \"\\,\"."
 ;; Try to find texmathp.el avalable.
 (condition-case nil (require 'texmathp) (error nil))
 
+(provide 'mu2tex)
+
 ;;; mu2tex.el ends here
 
