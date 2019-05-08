@@ -281,8 +281,8 @@ Assumptions:
 
 The decision as to whether a texpression before point is a unit expression or
 a molecule name is heuristic.  You can enforce interpretation as a molecule
-name with one C-u prefix, and interpretations as a unit expression with
-two C-u C-u prefixes.
+name with one `C-u' prefix, and interpretations as a unit expression with
+two `C-u C-u' prefixes.
 
 When called from Lisp, FORCE-MATH indicates that the conversion should
 be done for math mode."
@@ -366,7 +366,7 @@ point is inside one of the standard math environments."
              "\\|\\( \\)"
              "\\|\\(\\.\\)"
              "\\|\\(.\\)"))
-	s l n last-was-dot)
+	s l n last-was-dot lwdot nidot)
     (if (assoc rest mu2tex-molecule-exceptions)
         (setq molec (cdr (assoc rest mu2tex-molecule-exceptions)))
       (while (not (string= rest ""))
