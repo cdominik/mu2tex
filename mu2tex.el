@@ -50,7 +50,8 @@
 ;;
 ;; To use this package, just type the name of a molecule or a unit
 ;; expression into the buffer.  The expression must not contain
-;; spaces.  Then press the key to which mu2tex has been assigned.
+;; spaces.  Then, with the cursor right after the types expression,
+;; press the key to which mu2tex has been assigned.
 ;;
 ;; Example              Conversion result
 ;; -----------------    -----------------
@@ -245,14 +246,14 @@ the examples given in the default value of `mu2tex-units'."
 
 ;;;###autoload
 (defun mu2tex-math (arg)
-  "Call `mu2tex' on ARG, enforcing math mode."
+  "Call `mu2tex' enforcing math mode, passing ARG through to `mu2tex'."
   (interactive "P")
   (mu2tex arg 'force-math))
 
 ;;;###autoload
 (defun mu2tex (&optional arg force-math)
   "Formats a plain ASCII molecule name or unit expression ARG for TeX.
-This command grabs a molecule name or unit expression before the cursor
+This command grabs a molecule name or unit expression *before the cursor*
 and inserts the proper sequences to make it look good when typeset with TeX.
 The string taken from the buffer must be continuous, without spaces.  A dot
 can be inserted as separator when this is needed to make things unique.
