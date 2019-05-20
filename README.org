@@ -1,5 +1,7 @@
 * Mu2tex: convert ASCII representation of units, numbers and molecule names to LaTeX
 
+[[https://melpa.org/#/mu2tex][file:https://melpa.org/packages/mu2tex-badge.svg]]
+
 In scientific literature, it is common to format the symbols for
 chemical elements, molecules and unit names by using roman (as
 opposed to italic) letters for the names.  This makes such things
