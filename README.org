@@ -11,17 +11,26 @@ forms.  It also makes it easier to write numbers times powers of 10.
 
 ** Installation
 
-Put this file on your load path, byte compile it (not required),
-and copy the following code into your .emacs file.  Change the key
-definition to your liking.
+Mu2tex is available on [[http://melpa.org/][MELPA]]. To install it, [[http://melpa.org/#/getting-started][add MELPA to your package
+archive list]], and then type ~M-x package-install RET mu2tex~.
+
+If you prefer to install the package by hand, put the ~mu2tex.el~ file
+on your load path, byte compile it (not required), and copy the
+following code into your ~.emacs~ file:
 
 #+begin_src emacs-lisp
 (autoload 'mu2tex "mu2tex"
   "Insert constants into source code" t)
+#+end_src emacs-lisp
+
+You may also want to define a key binding for the ~mu2tex~ function;
+change the key definition to your liking.
+
+#+begin_src emacs-lisp
 (define-key global-map "\C-cm" 'mu2tex)
 #+end_src
 
-If you are installing this package through melpa, all you need is the
+If you are installing this package through MELPA, all you need is the
 key definition.
 
 ** Usage
