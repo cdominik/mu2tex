@@ -18,9 +18,11 @@ forms.  It also makes it easier to write numbers times powers of 10.
 Put this file on your load path, byte compile it (not required),
 and copy the following code into your .emacs file.  Change the key
 definition to your liking.
+#+begin_src emacs-list
    (autoload 'mu2tex "mu2tex"
     "Insert constants into source code" t)
   (define-key global-map "\C-cm" 'mu2tex)
+#+end_src
 
 * USAGE
 -----
