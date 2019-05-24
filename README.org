@@ -35,21 +35,21 @@ expression into the buffer.  The expression must not contain
 spaces.  Then press the key to which mu2tex has been assigned.
 
 #+begin_example
-: Example              Conversion result
-: -----------------    -----------------
-: H2O                  H$_2$O
-: C18O                 C$^18$O
-: H2C17O               H$_2$C$^17$O
-: m2s-2                m$^2$ s$^{-2}
-: 2.74e-13             $2.74\times10^{-13}$
+  Example              Conversion result
+  -----------------    -----------------
+  H2O                  H$_2$O
+  C18O                 C$^18$O
+  H2C17O               H$_2$C$^17$O
+  m2s-2                m$^2$ s$^{-2}
+  2.74e-13             $2.74\times10^{-13}$
 #+end_example
 
 A dot can be used as a separator where one is needed:
 
 #+begin_example
-: H2.18O               H$_2${}$^{18}$O
-: erg.cm-2s-1          erg cm$^{-2}$ s$^-1$
-: 2.7e-2Jy.arcsec-2    $2.7\times10^{-2}$ Jy arcsec$^-2$
+  H2.18O               H$_2${}$^{18}$O
+  erg.cm-2s-1          erg cm$^{-2}$ s$^-1$
+  2.7e-2Jy.arcsec-2    $2.7\times10^{-2}$ Jy arcsec$^-2$
 #+end_example
 
 The dot can also be used to force interpretation of a number as either
