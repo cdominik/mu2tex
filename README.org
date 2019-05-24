@@ -18,11 +18,15 @@ forms.  It also makes it easier to write numbers times powers of 10.
 Put this file on your load path, byte compile it (not required),
 and copy the following code into your .emacs file.  Change the key
 definition to your liking.
+
 #+begin_src emacs-lisp
   (autoload 'mu2tex "mu2tex"
     "Insert constants into source code" t)
   (define-key global-map "\C-cm" 'mu2tex)
 #+end_src
+
+If you are installing this package through melpa, all you need is the
+key definition.
 
 * USAGE
 -----
@@ -30,6 +34,7 @@ To use this package, just type the name of a molecule or a unit
 expression into the buffer.  The expression must not contain
 spaces.  Then press the key to which mu2tex has been assigned.
 
+#+begin_example
 : Example              Conversion result
 : -----------------    -----------------
 : H2O                  H$_2$O
@@ -37,12 +42,15 @@ spaces.  Then press the key to which mu2tex has been assigned.
 : H2C17O               H$_2$C$^17$O
 : m2s-2                m$^2$ s$^{-2}
 : 2.74e-13             $2.74\times10^{-13}$
+#+end_example
 
 A dot can be used as a separator where one is needed:
 
+#+begin_example
 : H2.18O               H$_2${}$^{18}$O
 : erg.cm-2s-1          erg cm$^{-2}$ s$^-1$
 : 2.7e-2Jy.arcsec-2    $2.7\times10^{-2}$ Jy arcsec$^-2$
+#+end_example
 
 The dot can also be used to force interpretation of a number as either
 isotope number or stoichiometric number.  By default, mu2tex assumes
@@ -52,8 +60,10 @@ numbers that need to become superscripts.  In the cases where this
 heuristics fails, you can use the dot to force assignment to left or
 right and in this way break the ambiguity:
 
-: H.6Li                H{}$^{6}$Li
-: C18.H                C$_{18}$H
+#+begin_example
+  H.6Li                H{}$^{6}$Li
+  C18.H                C$_{18}$H
+#+end_example
 
 Inside (La)TeX math mode, a different conversion is needed.  In this
 case, the resulting string should be put into a \mathrm macro, to get
@@ -66,23 +76,25 @@ get the math-mode version of the conversion.
 -------------
 You can use the following variables to customize this mode:
 
-: mu2tex-use-mathrm
-:    Do you prefer $\mathrm{H_2O}$ or H$_2$O in math mode?
-: 
-: mu2tex-use-texmathp
-:    Should texmathp.el be used to determine math or text mode?
-: 
-: mu2tex-isotope-limit
-:    Numbers larger than or equal to this are interpreted as isotope numbers.
-: 
-: mu2tex-molecule-exceptions
-:    Special molecules for which the automatic converter fails.
-: 
-: mu2tex-units
-:    Units that can be used to distinguish a unit expression from a molecule.
-: 
-: mu2tex-space-string
-:    What should be inserted as separator between different units?
+#+begin_example
+  mu2tex-use-mathrm
+     Do you prefer $\mathrm{H_2O}$ or H$_2$O in math mode?
+  
+  mu2tex-use-texmathp
+     Should texmathp.el be used to determine math or text mode?
+  
+  mu2tex-isotope-limit
+     Numbers larger than or equal to this are interpreted as isotope numbers.
+  
+  mu2tex-molecule-exceptions
+     Special molecules for which the automatic converter fails.
+  
+  mu2tex-units
+     Units that can be used to distinguish a unit expression from a molecule.
+  
+  mu2tex-space-string
+     What should be inserted as separator between different units?
+#+end_example
 
 ** Heuristics, and fixes where needed
 ----------------------------------
@@ -102,9 +114,11 @@ You can use the following variables to customize this mode:
   can simply hard-code the conversion for these molecules using the
   variable `mu2tex-molecule-exceptions'.  For example:
 
-  :      (setq mu2tex-exceptions
-  :            '((\"HC18H\" . \"HC$_{18}$H\")
-  :              (\"H6Li\"  . \"H$^{6}$Li\")))
+  #+begin_src emacs-lisp
+    (setq mu2tex-exceptions
+          '((\"HC18H\" . \"HC$_{18}$H\")
+            (\"H6Li\"  . \"H$^{6}$Li\")))
+  #+end_src
 
 * AUTHOR
 ------
