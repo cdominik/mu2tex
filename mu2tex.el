@@ -1,7 +1,7 @@
 ;;; mu2tex.el --- Convert plain text molecule names and units to TeX
 ;; Copyright (c) 2005, 2019 Carsten Dominik
 
-;; Author: Carsten Dominik <dominik@.uva.nl>
+;; Author: Carsten Dominik <carsten.dominik@gmail.com>
 ;; Version: 1.3
 ;; Keywords: tex
 ;; URL: https://github.com/cdominik/mu2tex

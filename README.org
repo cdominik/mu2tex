@@ -122,7 +122,7 @@ You can use the following variables to customize this mode:
 
 * AUTHOR
 ------
-Carsten Dominik <dominik@uva.nl>
+Carsten Dominik <carsten.dominik@gmail.com>
 
 * ACKNOWLEDGEMENTS
 ----------------
