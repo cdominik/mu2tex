@@ -1,9 +1,10 @@
-;;;; mu2tex.el --- Convert plain text molecule names and units to TeX
+;;; mu2tex.el --- Convert plain text molecule names and units to TeX
 ;; Copyright (c) 2005, 2019 Carsten Dominik
 
-;; Author: Carsten Dominik <dominik@.uva.nl>
-;; Version: 1.2
+;; Author: Carsten Dominik <carsten.dominik@gmail.com>
+;; Version: 1.3
 ;; Keywords: tex
+;; URL: https://github.com/cdominik/mu2tex
 
 ;; This file is not part of GNU Emacs.
 
@@ -41,7 +42,7 @@
 ;; and copy the following code into your .emacs file.  Change the key
 ;; definition to your liking.
 ;;
-;;   (autoload 'mu2tex "mu2tex" 
+;;   (autoload 'mu2tex "mu2tex"
 ;;     "Insert constants into source code" t)
 ;;   (define-key global-map "\C-cm" 'mu2tex)
 ;;
@@ -50,7 +51,8 @@
 ;;
 ;; To use this package, just type the name of a molecule or a unit
 ;; expression into the buffer.  The expression must not contain
-;; spaces.  Then press the key to which mu2tex has been assigned.
+;; spaces.  Then, with the cursor right after the types expression,
+;; press the key to which mu2tex has been assigned.
 ;;
 ;; Example              Conversion result
 ;; -----------------    -----------------
@@ -119,7 +121,7 @@
 ;;   interpretation as a unit expression.  Finally, you can also use the
 ;;   special commands `mu2tex-unit' and `mu2tex-molecule'.
 ;;
-;; - If you have specific molecules that you need often and that defy the 
+;; - If you have specific molecules that you need often and that defy the
 ;;   heuristics for isotope numbers and stoichiometric coefficients, you
 ;;   can simply hard-code the conversion for these molecules using the
 ;;   variable `mu2tex-molecule-exceptions'.  For example:
@@ -131,7 +133,7 @@
 ;;
 ;; AUTHOR
 ;; ------
-;; Carsten Dominik <dominik@science.uva.nl>
+;; Carsten Dominik <dominik@.uva.nl>
 ;;
 ;; ACKNOWLEDGEMENTS
 ;; ----------------
@@ -149,6 +151,7 @@
 ;; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
+;;; Code:
 
 (defvar mu2tex-molecule-chars "-+a-zA-Z0-9()/.\\\\*"
   "Characters allowed in a molecule name before formatting.")
@@ -168,7 +171,9 @@ to get the math-mode conversion."
 (defcustom mu2tex-isotope-limit 10
   "Numbers greater or equal than this are interpreted as isotope numbers.
 These will be raised as superscripts.  Numbers smaller than this will be
-interpreted as stoichiometric coefficients and be lowered as subscripts.")
+interpreted as stoichiometric coefficients and be lowered as subscripts."
+  :group 'mu2tex
+  :type 'integer)
 
 (defcustom mu2tex-molecule-exceptions nil
   "List of exceptions for the molecule formatter.
@@ -182,8 +187,7 @@ For example, HC18H will be formatted incorrectly to HC$^{18}$H, because the
 rules assume that the number 18 indicates an isope identifier.  To make sure
 also this molecule is formatted correctly, use
 
-   (setq mu2tex-exceptions '((\"HC18H\" . \"HC$_{18}$H\")))
-"
+   (setq mu2tex-exceptions '((\"HC18H\" . \"HC$_{18}$H\")))"
   :group 'mu2tex
   :type '(repeat (cons
                   (string :tag "Typed string")
@@ -195,12 +199,12 @@ also this molecule is formatted correctly, use
     "g" "kg" "t"
     "dyn"  ;; Cannot use "N" because that is of course Nitrogen.
     "J" "erg" "cal" "eV" "mK"
-    "mol" 
-    "Pa" "hPa" "atm"
+    "mol"
+    "Pa" "hPa" "atm" "bar"
     "Bq" "Ci" "rem" "Jy"
     "rad" "sr" "arcmin" "arcsec" "deg" "degree")
   "Words that uniquely identify a unit expression.  Case is significant.
-This default value is good for astgronomy papers.")
+This default value is good for astronomy papers.")
 
 (defcustom mu2tex-units
   '("Jy" "lj" "AU"
@@ -243,14 +247,14 @@ the examples given in the default value of `mu2tex-units'."
 
 ;;;###autoload
 (defun mu2tex-math (arg)
-  "Call `mu2tex', enforcing math mode."
+  "Call `mu2tex' enforcing math mode, passing ARG through to `mu2tex'."
   (interactive "P")
   (mu2tex arg 'force-math))
 
 ;;;###autoload
 (defun mu2tex (&optional arg force-math)
-  "Format a plain ASCII molecule name or unit expression for TeX.
-This command grabs a molecule name or unit expression before the cursor
+  "Formats a plain ASCII molecule name or unit expression ARG for TeX.
+This command grabs a molecule name or unit expression *before the cursor*
 and inserts the proper sequences to make it look good when typeset with TeX.
 The string taken from the buffer must be continuous, without spaces.  A dot
 can be inserted as separator when this is needed to make things unique.
@@ -267,7 +271,7 @@ Examples:
 
 Assumptions:
 1. When converting a molecule name:
-   The program assumes that the characters A-Z,a-z,0-9,+,-,(,) can be
+   The program assumes that the characters A\-Z,a-z,0-9,+,-,(,) can be
    part of the name of a molecule.  + and - will be interpreted as
    charges and put into a superscript.  Numbers smaller than 10 will be
    interpreted as stoichiometric coefficients and will be formatted as
@@ -279,8 +283,8 @@ Assumptions:
 
 The decision as to whether a texpression before point is a unit expression or
 a molecule name is heuristic.  You can enforce interpretation as a molecule
-name with one C-u prefix, and interpretations as a unit expression with
-two C-u C-u prefixes.
+name with one `C-u' prefix, and interpretations as a unit expression with
+two `C-u C-u' prefixes.
 
 When called from Lisp, FORCE-MATH indicates that the conversion should
 be done for math mode."
@@ -303,7 +307,7 @@ be done for math mode."
 	      mu2tex-use-mathrm)
       (while (string-match "\\$+" new) ; need to get rid of dollars
 	(if (save-match-data
-	      (string-match "\\\\[a-zA-Z]+$" 
+	      (string-match "\\\\[a-zA-Z]+$"
 			    (substring new 0 (match-beginning 0))))
 	    (setq new (replace-match "{}" t t new))
 	  (setq new (replace-match "" t t new))))
@@ -320,7 +324,7 @@ This used either `texmathp' for sophisticated parsing, or simply checks if
 point is inside one of the standard math environments."
   (if (and (fboundp 'texmathp) mu2tex-use-texmathp)
       (texmathp)
-    nil))	   
+    nil))
 
 (defun mu2tex-beginning-of-entry ()
   "Return startposition of molecule name or unit expression."
@@ -353,10 +357,10 @@ point is inside one of the standard math environments."
 	(let (case-fold-search) (string-match (mu2tex-unit-re) s)))))
 
 (defun mu2tex-format-molecule (string)
-  "The formatter for molecule names."
+  "Formats the molecule name STRING."
   (let ((rest string) (molec "")
         (case-fold-search nil)
-        (re (concat 
+        (re (concat
              "^"
              "\\(o-\\|p-\\|[Oo]rtho-\\|[pP]ara-\\|[a-zA-HJ-Z]+\\)"
              "\\|\\([-+]+\\)"
@@ -364,7 +368,7 @@ point is inside one of the standard math environments."
              "\\|\\( \\)"
              "\\|\\(\\.\\)"
              "\\|\\(.\\)"))
-	s l n last-was-dot)
+	s l n last-was-dot lwdot nidot)
     (if (assoc rest mu2tex-molecule-exceptions)
         (setq molec (cdr (assoc rest mu2tex-molecule-exceptions)))
       (while (not (string= rest ""))
@@ -377,7 +381,7 @@ point is inside one of the standard math environments."
 		lwdot last-was-dot
 		nidot (equal (string-to-char rest) ?.)
 		last-was-dot nil)
-          (setq molec 
+          (setq molec
                 (concat molec
                         (cond
                          ((match-end 1) s)
@@ -389,7 +393,7 @@ point is inside one of the standard math environments."
 			  (if (> l 1) (setq s (concat "{" s "}")))
 			  (cond
 			   ((equal molec "") (concat "$^" s "$"))
-			   ((and (or lldot
+			   ((and (or lwdot
 				     (>= n mu2tex-isotope-limit))
 				 (not nidot))
 			    (concat "$^" s "$"))
@@ -406,7 +410,7 @@ point is inside one of the standard math environments."
     molec))
 
 (defun mu2tex-format-unit (string)
-  "The formatter for unit expressions."
+  "Formats the unit expression STRING."
   (let ((rest string) (unit "") m e p u)
     ;; Check for and convert number
     (when (string-match "^\\([-+]?[0-9.]+\\)\\([ex]\\([-+]?[0-9]+\\)\\)?" rest)
@@ -414,7 +418,7 @@ point is inside one of the standard math environments."
 	    e (if (match-beginning 2) (match-string 3 rest))
 	    rest (substring rest (match-end 0))
 	    unit (concat (if e "$" "")
-			 m 
+			 m
 			 (if e (concat "\\times10^{" e "}") "")
 			 (if e "$" "")
 			 ))
@@ -430,8 +434,8 @@ point is inside one of the standard math environments."
 	    rest (substring rest (match-end 0))
 	    unit (concat unit
 			 (if (equal unit "") "" p)
-			 u 
-			 (if e 
+			 u
+			 (if e
 			     (if (> (length e) 1)
 				 (concat "$^{" e "}$")
 			       (concat "$^" e "$"))
@@ -444,15 +448,17 @@ Useful values are for example \" \", \"~\", \"\\ \", or \"\\,\"."
   :group 'mu2tex
   :type 'string)
 
-(defun mu2tex-space (s)
-  "Translate separators."
+(defun mu2tex-space (S)
+  "Translates separators in S."
   (cond
-   ((equal s "")  mu2tex-space-string)
-   ((equal s ".") mu2tex-space-string)
-   ((equal s "/") "/")))
+   ((equal S "")  mu2tex-space-string)
+   ((equal S ".") mu2tex-space-string)
+   ((equal S "/") "/")))
 
 ;; Try to find texmathp.el avalable.
 (condition-case nil (require 'texmathp) (error nil))
+
+(provide 'mu2tex)
 
 ;;; mu2tex.el ends here
 
