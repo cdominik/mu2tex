@@ -138,7 +138,7 @@
 ;; ACKNOWLEDGEMENTS
 ;; ----------------
 ;; Cecilia Ceccarelli made me write papers about chemistry, and in this way
-;; prompted this program.  She also had the idea for the unit converter.
+;; prompted this program.  She also had the idea for the unit formatter.
 ;;
 ;; CHANGES
 ;; -------
