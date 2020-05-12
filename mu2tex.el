@@ -81,7 +81,7 @@
 ;;
 ;; Inside (La)TeX math mode, a different conversion is needed.  In this
 ;; case, the resulting string should be put into a \mathrm macro, to get
-;; the correct fonts, and no $ characters are needed to swith mode.
+;; the correct fonts, and no $ characters are needed to switch mode.
 ;; If you have the texmathp.el package, recognition of the environment will
 ;; be automatic.  If you don't, you can use the command `mu2tex-math' to
 ;; get the math-mode version of the conversion.
